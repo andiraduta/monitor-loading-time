@@ -1,0 +1,18 @@
+name: Monitor Load Times
+
+on:
+  #schedule:
+  #  - cron: '*/2 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run-curl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save time to load to csv
+        run: echo "$(date +%s),$(curl -s -w "%{time_total}\n" -o /dev/null "https://c.evidon.com/dg/dg.js")" >> loadtimes.csv
+      - name: Commit new files
+        uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # set automatically by Github
+          BRANCH_NAME: 'main'
