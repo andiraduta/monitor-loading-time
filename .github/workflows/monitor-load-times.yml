@@ -11,8 +11,10 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@master
-      - name: Save time to load to csv
+      - name: Save time to load to csv - 1
         run: echo "$(date +%s),$(curl -s -w "%{time_total}\n" -o /dev/null "https://c.evidon.com/dg/dg.js")" >> loadtimes.csv
+      - name: Save time to load to csv - 2
+        run: echo "$(date +%s),$(curl -s -w "%{time_total}\n" -o /dev/null "https://c.evidon.com/dg/1402/companyConfig.json?c=1402&org=https://www.flipkey.com")" >> loadtimes2.csv
       - name: Commit new files
         uses: mikeal/publish-to-github-action@master
         env:
